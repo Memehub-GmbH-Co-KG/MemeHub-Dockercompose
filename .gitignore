@@ -1,0 +1,3 @@
+data/config/*
+!data/config/.gitkeep
+*.env

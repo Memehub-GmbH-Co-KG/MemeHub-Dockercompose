@@ -1,0 +1,47 @@
+version: "3.8"
+services:
+    mhredis:
+        image: bitnami/redis
+        restart: always
+        networks:
+            - mh
+        environment: 
+            ALLOW_EMPTY_PASSWORD: "yes"
+    mhmongo:
+        image: mongo:3-xenial
+        restart: always
+        networks: 
+            - mh
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: root
+    mhconfig:
+        image: mhconfig
+        restart: always
+        env_file: config.env
+        networks:
+            - mh
+        volumes: 
+            - ./data/config:/etc/memehub
+        depends_on: 
+            - mhredis
+    mhlogger:
+        image: mhlogger
+        restart: always
+        networks: 
+            - mh
+        depends_on: 
+            - mhconfig
+            - mhredis
+    mhpermissions:
+        image: mhpermissions
+        restart: always
+        networks:
+            - mh
+        depends_on:
+            - mhconfig
+            - mhredis
+networks:
+    mh:
+        name: mh
+        driver: bridge
