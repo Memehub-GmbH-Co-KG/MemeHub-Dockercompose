@@ -1,0 +1,46 @@
+services:
+  mhredis:
+    image: bitnami/redis
+    restart: always
+    networks:
+      - mh
+    environment: 
+      ALLOW_EMPTY_PASSWORD: "yes"
+    logging:
+      driver: none
+  mhredis-commander:
+    image: rediscommander/redis-commander:latest
+    restart: always
+    networks: 
+      - mh
+    environment:
+      - REDIS_HOSTS=mhredis
+    ports:
+      - "8081:8081"
+    logging:
+      driver: none
+  mhmongo:
+    image: mongo:4.4
+    restart: always
+    networks: 
+      - mh
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    logging:
+      driver: none
+  mhmongo-mongoclient:
+    image: mongoclient/mongoclient
+    restart: always
+    networks: 
+      - mh
+    environment:
+      MONGOCLIENT_DEFAULT_CONNECTION_URL: mongodb://root:root@mhmongo
+    ports:
+      - "8082:3000"
+    logging:
+      driver: none
+networks:
+  mh:
+    name: mh
+    driver: bridge
