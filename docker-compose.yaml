@@ -1,27 +1,36 @@
 version: "3.8"
 services:
-  mhconfig:
-    image: mhconfig
+  config:
+    image: memehub-config
     restart: always
     env_file: config.env
     networks:
       - mh
     volumes: 
       - ./data/config:/etc/memehub
-  mhlogger:
-    image: mhlogger
+  logger:
+    image: memehub-logger
     restart: always
     networks: 
       - mh
     depends_on: 
-      - mhconfig
-  mhpermissions:
-    image: mhpermissions
+      - config
+  permissions:
+    image: memehub-permissions
     restart: always
     networks:
       - mh
     depends_on:
-      - mhconfig
+      - config
+      - logger
+  categories:
+    image: memehub-categories
+    restart: always
+    networks:
+      - mh
+    depends_on: 
+      - config
+      - logger
 networks:
   mh:
     name: mh
