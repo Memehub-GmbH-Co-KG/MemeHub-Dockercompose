@@ -1,13 +1,15 @@
+version: "3.8"
 services:
   mhredis:
-    image: bitnami/redis
+    image: bitnami/redis:6.0
     restart: always
     networks:
       - mh
     environment: 
       ALLOW_EMPTY_PASSWORD: "yes"
-    logging:
-      driver: none
+      REDIS_AOF_ENABLED: "no"
+    volumes:
+      - ./data/redis:/bitnami/redis/data
   mhredis-commander:
     image: rediscommander/redis-commander:latest
     restart: always
@@ -17,8 +19,6 @@ services:
       - REDIS_HOSTS=mhredis
     ports:
       - "8081:8081"
-    logging:
-      driver: none
   mhmongo:
     image: mongo:4.4
     restart: always
@@ -27,8 +27,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
-    logging:
-      driver: none
   mhmongo-mongoclient:
     image: mongoclient/mongoclient
     restart: always
@@ -38,8 +36,6 @@ services:
       MONGOCLIENT_DEFAULT_CONNECTION_URL: mongodb://root:root@mhmongo
     ports:
       - "8082:3000"
-    logging:
-      driver: none
 networks:
   mh:
     name: mh

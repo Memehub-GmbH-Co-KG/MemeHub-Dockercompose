@@ -31,6 +31,34 @@ services:
     depends_on: 
       - config
       - logger
+  limits:
+    image: memehub-limits
+    restart: always
+    networks: 
+      - mh
+    depends_on: 
+      - config
+      - logger
+  contests:
+    image: memehub-contests
+    restart: always
+    networks: 
+      - mh
+    depends_on: 
+      - config
+      - logger
+  bot:
+    image: memehub-bot
+    restart: always
+    networks: 
+      - mh
+    depends_on: 
+      - config
+      - logger
+      - contests
+      - limits
+      - categories
+      - permissions
 networks:
   mh:
     name: mh
