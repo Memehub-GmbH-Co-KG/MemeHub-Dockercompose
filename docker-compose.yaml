@@ -11,6 +11,7 @@ services:
   logger:
     image: leifb/memehub-logger
     restart: always
+    env_file: config.env
     networks: 
       - mh
     depends_on: 
@@ -18,6 +19,7 @@ services:
   permissions:
     image: leifb/memehub-permissions
     restart: always
+    env_file: config.env
     networks:
       - mh
     depends_on:
@@ -26,6 +28,7 @@ services:
   categories:
     image: leifb/memehub-categories
     restart: always
+    env_file: config.env
     networks:
       - mh
     depends_on: 
@@ -34,6 +37,7 @@ services:
   limits:
     image: leifb/memehub-limits
     restart: always
+    env_file: config.env
     networks: 
       - mh
     depends_on: 
@@ -42,6 +46,7 @@ services:
   contests:
     image: leifb/memehub-contests
     restart: always
+    env_file: config.env
     networks: 
       - mh
     depends_on: 
@@ -50,6 +55,7 @@ services:
   bot:
     image: leifb/memehub-bot
     restart: always
+    env_file: config.env
     networks: 
       - mh
     depends_on: 
