@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   config:
-    image: memehub-config
+    image: leifb/memehub-config
     restart: always
     env_file: config.env
     networks:
@@ -9,14 +9,14 @@ services:
     volumes: 
       - ./data/config:/etc/memehub
   logger:
-    image: memehub-logger
+    image: leifb/memehub-logger
     restart: always
     networks: 
       - mh
     depends_on: 
       - config
   permissions:
-    image: memehub-permissions
+    image: leifb/memehub-permissions
     restart: always
     networks:
       - mh
@@ -24,7 +24,7 @@ services:
       - config
       - logger
   categories:
-    image: memehub-categories
+    image: leifb/memehub-categories
     restart: always
     networks:
       - mh
@@ -32,7 +32,7 @@ services:
       - config
       - logger
   limits:
-    image: memehub-limits
+    image: leifb/memehub-limits
     restart: always
     networks: 
       - mh
@@ -40,7 +40,7 @@ services:
       - config
       - logger
   contests:
-    image: memehub-contests
+    image: leifb/memehub-contests
     restart: always
     networks: 
       - mh
@@ -48,7 +48,7 @@ services:
       - config
       - logger
   bot:
-    image: memehub-bot
+    image: leifb/memehub-bot
     restart: always
     networks: 
       - mh
