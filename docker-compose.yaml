@@ -65,6 +65,16 @@ services:
       - limits
       - categories
       - permissions
+  media_server:
+    image: leifb/memehub-media-server
+    restart: always
+    env_file: config.env
+    networks: 
+      - mh
+    depends_on: 
+      - config
+    ports:
+      - "3344:3344"
 networks:
   mh:
     name: mh
