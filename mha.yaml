@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  mhwebserver:
+    image: leifb/memehub-webserver
+    restart: always
+    networks: 
+      - mha
+    volumes:
+      - "data/mha:/data"
+      - "data/nominees:/nominees"
+      - "data/users.json:/users.json"
+    ports:
+      - "1342:80"
+    env_file: mha.env
+    environment:
+      MHA_DATA_PATH: /data
+      MHA_NOMINEES_PATH: /nominees
+      MHA_USERS_PATH: /users.json
+  mhwebsite:
+    image: leifb/memehub-website
+    restart: always
+    networks: 
+      - mha
+    ports:
+      - "5001:80"
+networks:
+  mha:
+    name: mha
+    driver: bridge
