@@ -6,9 +6,9 @@ services:
     networks: 
       - mha
     volumes:
-      - "data/mha:/data"
-      - "data/nominees:/nominees"
-      - "data/users.json:/users.json"
+      - "./data/mha:/data"
+      - "./data/nominees:/nominees"
+      - "./data/users.json:/users.json"
     ports:
       - "1342:80"
     env_file: mha.env
@@ -23,6 +23,7 @@ services:
       - mha
     ports:
       - "5001:80"
+    env_file: mha.env
 networks:
   mha:
     name: mha

@@ -2,4 +2,8 @@ data/config/*
 !data/config/.gitkeep
 data/redis/*
 !data/redis/.gitkeep
+data/mha
+data/nominees
+data/users.json
 *.env
+!*.template.env
